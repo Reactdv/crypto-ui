@@ -19,7 +19,7 @@ import { fetchTrendingCoins } from "../../../api/Api.js"
 
 
 
-export const  Home =()=>{
+export const  Home =({navigation})=>{
   
 const [trendingCoins,setTrendingCoins] = useState([])
   const [isNotify,setIsNotify] = useState(false)
@@ -41,6 +41,9 @@ axios.get(fetchTrendingCoins)
     getTrendingCoins()
   },[trendingCoins])
   
+  const goToTrade =()=>{
+    navigation.navigate("Trade")
+  }
   
  const handleNotify =()=> {
    setIsNotify(notify=> !notify)
@@ -58,6 +61,7 @@ axios.get(fetchTrendingCoins)
   return (
 
 <View style={container}> 
+  <ScrollView style={tw`h-[5000px] pb-96`}>  
    <View>
    <LinearGradient
      colors={["#4776E6","#8E54E9"]}
@@ -95,7 +99,10 @@ axios.get(fetchTrendingCoins)
       
       return (
         
-        <View style={trending} key={coin.id}>
+        <TouchableOpacity 
+        onPress={goToTrade}
+        style={trending} key={coin.id}>
+           
            <View style={imgNameSymbolContainer}>
           <Image resizeMode="contain"
           source={coin.image}
@@ -107,18 +114,18 @@ axios.get(fetchTrendingCoins)
           </View>
           </View>
           
-          <Text style={coinPriceStyle}>₱ {coin.current_price}</Text>
+          <Text style={coinPriceStyle}>₱ {coin.current_price.toLocaleString()}</Text>
           <Text style={[coinStatusStyle,{color:coinDirection}]}>{coin.price_change_percentage_24h}</Text>
         
-          
-        </View>
+       
+        </TouchableOpacity>
         )
     })
      }
    </ScrollView>
    </View>
    
-   <View style={notifyContainer}>
+   <View style={shadowedContainer}>
        <TouchableOpacity
         onPress={handleNotify}>
       <MaterialIcons name={notif2} size={24} color="yellow" />
@@ -134,8 +141,77 @@ axios.get(fetchTrendingCoins)
        <Entypo name="chevron-with-circle-right" size={24} color="black" />
         </TouchableOpacity>
    </View>
+   <View style={[shadowedContainer,tw`flex-col items-start bg-indigo-700`]}>
+   <Text style={[title2,tw`text-white`]}>Investing safety </Text>
+   <Text style={txtContent}>it's very difficult to time an investment, especially when the market is volatile learn how to use dollar cost averaging to your advantage
+   </Text>
+   <Text style={learnMoreStyle}>Learn more </Text>
+   </View>
+    <View style={[shadowedContainer,tw`flex-col items-start `]}>
+     
+     <Text style={title2}>Transaction history </Text>
+      
+     <View style={[contentContainerRow,tw`w-full justify-between`]}>
+      <View style={[contentContainerRow,{gap:5}]}>
+     <MaterialIcons name="compare-arrows" size={24} color="black" />
+     <View style={contentContainerCol}>
+     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+     <Text style={subtitle}>14:20 12 Apr</Text>
+      </View>
+      </View>
+      
+     <View style={[contentContainerRow,{gap:5}]}>
+     <Text style={title2}>2.0034 eth</Text>
+     <Entypo name="chevron-with-circle-right" size={24} color="black" />
+     </View>
+     </View>
+     
+   </View>
+   
+    <View style={[shadowedContainer,tw`flex-col items-start `]}>
+     
+     <Text style={title2}>Transaction history </Text>
+      
+     <View style={[contentContainerRow,tw`w-full justify-between`]}>
+      <View style={[contentContainerRow,{gap:5}]}>
+     <MaterialIcons name="compare-arrows" size={24} color="black" />
+     <View style={contentContainerCol}>
+     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+     <Text style={subtitle}>14:20 12 Apr</Text>
+      </View>
+      </View>
+      
+     <View style={[contentContainerRow,{gap:5}]}>
+     <Text style={title2}>2.0034 eth</Text>
+     <Entypo name="chevron-with-circle-right" size={24} color="black" />
+     </View>
+     </View>
+     
+   </View>
+   
+   <View style={[shadowedContainer,tw`flex-col items-start `]}>
+     
+     <Text style={title2}>Transaction history </Text>
+      
+     <View style={[contentContainerRow,tw`w-full justify-between`]}>
+      <View style={[contentContainerRow,{gap:5}]}>
+     <MaterialIcons name="compare-arrows" size={24} color="black" />
+     <View style={contentContainerCol}>
+     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+     <Text style={subtitle}>14:20 12 Apr</Text>
+      </View>
+      </View>
+      
+     <View style={[contentContainerRow,{gap:5}]}>
+     <Text style={title2}>2.0034 eth</Text>
+     <Entypo name="chevron-with-circle-right" size={24} color="black" />
+     </View>
+     </View>
+     
+   </View>
+   
+</ScrollView>
 </View> 
-
    ) 
 }
 
@@ -155,7 +231,7 @@ const balanceStatus = tw`text-xs text-red-500 font-light`
 
 const title = tw`text-sm font-light text-white -mt-[50px] z-10 ml-2.5`
 
-const trending = tw`w-37 h-30 rounded-lg shadow-2xl bg-white  mr-2.5`
+const trending = tw`w-37 h-30 rounded-lg shadow-2xl bg-white  mr-2.5 transition duration-500 ease`
 
 const imgNameSymbolContainer = [tw`flex-row items-center justify-start mx-auto my-2.5`,{gap:5}]
 
@@ -172,4 +248,11 @@ const subtitle = tw`text-sm font-light text-stone-400 `
 
 const titleSubtitleContainer = tw`flex-col items-center justify-center`
 
-const notifyContainer = tw`flex flex-row items-center justify-between shadow-xl bg-white p-2.5 m-2.5`
+const shadowedContainer = tw`flex flex-row items-center justify-between shadow-xl bg-white p-2.5 m-2.5`
+
+const txtContent = tw`text-white`
+
+const learnMoreStyle = tw`text-cyan-400 underline`
+
+const contentContainerRow = tw`items-center  flex-row `
+const contentContainerCol = tw`flex-col `
