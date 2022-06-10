@@ -12,7 +12,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 
-export const  Trade =()=>{
+  export const  Trade =()=>{
   return (
 
 <View> 
@@ -26,3 +26,8 @@ export const  Trade =()=>{
 
 
 
+
+
+      
+
+        

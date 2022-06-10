@@ -12,7 +12,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 
-export const  Portfolio =()=>{
+  export const  Portfolio =()=>{
   return (
 
 <View> 
@@ -26,3 +26,8 @@ export const  Portfolio =()=>{
 
 
 
+
+
+      
+
+        

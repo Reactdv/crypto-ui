@@ -2,7 +2,7 @@
 
 
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity,Image,ScrollView,StyleSheet, Text, View } from 'react-native';
+import { Modal,TouchableOpacity,Image,ScrollView,StyleSheet, Text, View } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -13,14 +13,94 @@ import { Ionicons,MaterialIcons,Entypo } from '@expo/vector-icons';
 
 import tw from "twrnc"
 import axios from "axios"
-import { fetchTrendingCoins } from "../../../api/Api.js"
+import { fetchTrendingCoins,ohlc } from "../../../api/Api.js"
+import {CoinDetails} from "./Components/CoinDetails.js"
 
 
+
+
+
+
+
+const Coins =({direction,id,img,price,symbol,name,priceChange})=>{
+  
+const [isNavigate,setIsNavigate] = useState(false)
+  const [chartData,setChartData] = useState([])
+  
+  
+  const getHistoricalData = (id)=>{
+    axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=php&from=1654203443&to=1654808243` 
+    )
+    .then((res)=>{
+      return (
+        setChartData(res.data.prices)
+      
+        
+        )
+    })
+    .catch(er => alert(er))
+    
+  }
+  
+  useLayoutEffect(()=>{
+    getHistoricalData(id)
+    
+   },[chartData])
+  
+  
+  
+ 
+  
+  return (
+    <View>
+   <TouchableOpacity 
+        onPress={()=>{
+        setIsNavigate(toggled=> !toggled)
+        }}
+        style={trending} key={id}>
+           
+           <View style={imgNameSymbolContainer}>
+          <Image resizeMode="contain"
+          source={img}
+          style={tw`w-[30px] h-[30px] rounded-full`}
+          />
+          <View style={nameSymbolContainer}>
+          <Text>{name}</Text>
+          <Text style={symbolStyle}>{symbol.toUpperCase()}</Text>
+          </View>
+          </View>
+          
+          <Text style={coinPriceStyle}>₱ {price.toLocaleString()}</Text>
+          <Text style={[coinStatusStyle,{color:direction}]}>{priceChange}</Text>
+        
+       
+        </TouchableOpacity>
+        <Modal visible={isNavigate}>
+   
+  <CoinDetails 
+  
+    chartData={chartData}
+    priceChange={priceChange}
+    id={id}
+    name={name}
+    symbol={symbol}
+    direction={direction}
+    price={price}
+    img={img}
+    setIsNavigate={setIsNavigate}
+    isNavigate={isNavigate}/>
+      
+    
+    
+    </Modal>
+      </View>
+    )
+}
 
 
 
 export const  Home =({navigation})=>{
-  
+ 
 const [trendingCoins,setTrendingCoins] = useState([])
   const [isNotify,setIsNotify] = useState(false)
   
@@ -29,8 +109,8 @@ axios.get(fetchTrendingCoins)
     .then((res)=>{
       return(
         
-        setTrendingCoins(res.data),
-        console.log(trendingCoins)
+        setTrendingCoins(res.data)
+       
         
         )
     })
@@ -41,9 +121,7 @@ axios.get(fetchTrendingCoins)
     getTrendingCoins()
   },[trendingCoins])
   
-  const goToTrade =()=>{
-    navigation.navigate("Trade")
-  }
+  
   
  const handleNotify =()=> {
    setIsNotify(notify=> !notify)
@@ -57,6 +135,10 @@ axios.get(fetchTrendingCoins)
  
  const notifTxt = 
  isNotify?"get notified when coins are moving":"notification is off"
+ 
+ 
+
+ 
  
   return (
 
@@ -95,34 +177,26 @@ axios.get(fetchTrendingCoins)
    showsHorizontalScrollIndicator={false}
    style={tw`h-auto w-full px-5 pb-2.5`}>
      {trendingCoins.map((coin)=>{
-      const coinDirection = coin.price_change_percentage_24h>0? "green":"red";
+       const {id,name,symbol,current_price,image,price_change_percentage_24h} = coin
+
+      const coinDirection = price_change_percentage_24h>0? "green":"red";
       
       return (
         
-        <TouchableOpacity 
-        onPress={goToTrade}
-        style={trending} key={coin.id}>
-           
-           <View style={imgNameSymbolContainer}>
-          <Image resizeMode="contain"
-          source={coin.image}
-          style={tw`w-[30px] h-[30px] rounded-full`}
-          />
-          <View style={nameSymbolContainer}>
-          <Text>{coin.name}</Text>
-          <Text style={symbolStyle}>{coin.symbol.toUpperCase()}</Text>
-          </View>
-          </View>
-          
-          <Text style={coinPriceStyle}>₱ {coin.current_price.toLocaleString()}</Text>
-          <Text style={[coinStatusStyle,{color:coinDirection}]}>{coin.price_change_percentage_24h}</Text>
-        
-       
-        </TouchableOpacity>
+        <Coins 
+        direction={coinDirection}
+        id={id} 
+        img={image}
+        name={name}
+        symbol={symbol}
+        price={current_price}
+        priceChange={price_change_percentage_24h} 
+        />
         )
     })
      }
    </ScrollView>
+ 
    </View>
    
    <View style={shadowedContainer}>
