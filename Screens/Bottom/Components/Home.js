@@ -71,11 +71,13 @@ const [isNavigate,setIsNavigate] = useState(false)
           </View>
           
           <Text style={coinPriceStyle}>₱ {price.toLocaleString()}</Text>
-          <Text style={[coinStatusStyle,{color:direction}]}>{priceChange}</Text>
+          <Text style={[coinStatusStyle,{color:direction}]}>{priceChange.toFixed(2)}%</Text>
         
        
         </TouchableOpacity>
-        <Modal visible={isNavigate}>
+        <Modal 
+        animationType="fade"
+        visible={isNavigate}>
    
   <CoinDetails 
   
@@ -229,7 +231,7 @@ axios.get(fetchTrendingCoins)
       <View style={[contentContainerRow,{gap:5}]}>
      <MaterialIcons name="compare-arrows" size={24} color="black" />
      <View style={contentContainerCol}>
-     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+  <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
      <Text style={subtitle}>14:20 12 Apr</Text>
       </View>
       </View>
@@ -250,7 +252,7 @@ axios.get(fetchTrendingCoins)
       <View style={[contentContainerRow,{gap:5}]}>
      <MaterialIcons name="compare-arrows" size={24} color="black" />
      <View style={contentContainerCol}>
-     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+   <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
      <Text style={subtitle}>14:20 12 Apr</Text>
       </View>
       </View>
@@ -271,7 +273,7 @@ axios.get(fetchTrendingCoins)
       <View style={[contentContainerRow,{gap:5}]}>
      <MaterialIcons name="compare-arrows" size={24} color="black" />
      <View style={contentContainerCol}>
-     <Text style={[title2,tw`text-md`]}>Sold Etherium </Text>
+     <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
      <Text style={subtitle}>14:20 12 Apr</Text>
       </View>
       </View>
