@@ -104,7 +104,9 @@ const [isNavigate,setIsNavigate] = useState(false)
 export const  Home =({navigation})=>{
  
 const [trendingCoins,setTrendingCoins] = useState([])
+const [recentTrades,setRecentTrades] = useState([])
   const [isNotify,setIsNotify] = useState(false)
+  const [news,setNews] = useState([])
   
   const getTrendingCoins =()=>{
 axios.get(fetchTrendingCoins)
@@ -123,6 +125,119 @@ axios.get(fetchTrendingCoins)
     getTrendingCoins()
   },[trendingCoins])
   
+useEffect(()=>{
+  
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://binance43.p.rapidapi.com/trades',
+  params: {symbol: 'ETHBTC', limit: '20'},
+  headers: {
+    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+  
+  
+},[isNotify])
+
+  useEffect(()=>{
+    
+
+
+const options = {
+  method: 'GET',
+  url: 'https://binance43.p.rapidapi.com/klines',
+  params: {symbol: 'BTCUSDT', interval: '5m', limit: '100'},
+  headers: {
+    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+    
+    
+  },[])
+  
+ useEffect(()=>{
+   
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://binance43.p.rapidapi.com/ticker/bookTicker',
+  headers: {
+    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+   
+ },[])
+ 
+ useLayoutEffect(()=>{
+
+
+const options = {
+  method: 'GET',
+  url: 'https://cryptocurrency-news-live.p.rapidapi.com/crypto-news',
+  headers: {
+    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
+    'X-RapidAPI-Host': 'cryptocurrency-news-live.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+ setNews(response.data),
+ 
+ console.log(news)
+}).catch(function (error) {
+	console.error(error);
+});
+   
+ },[isNotify])
+ 
+ useEffect(()=>{
+   
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://binance43.p.rapidapi.com/ticker/price',
+  headers: {
+    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+   
+ },[isNotify])
+ 
+ 
+  const slicedNews = news.slice(1,20)
+  
   
   
  const handleNotify =()=> {
@@ -139,9 +254,9 @@ axios.get(fetchTrendingCoins)
  isNotify?"get notified when coins are moving":"notification is off"
  
  
+ 
+ 
 
- 
- 
   return (
 
 <View style={container}> 
@@ -186,6 +301,7 @@ axios.get(fetchTrendingCoins)
       return (
         
         <Coins 
+        
         direction={coinDirection}
         id={id} 
         img={image}
@@ -223,68 +339,32 @@ axios.get(fetchTrendingCoins)
    </Text>
    <Text style={learnMoreStyle}>Learn more </Text>
    </View>
-    <View style={[shadowedContainer,tw`flex-col items-start `]}>
-     
-     <Text style={title2}>Transaction history </Text>
-      
-     <View style={[contentContainerRow,tw`w-full justify-between`]}>
-      <View style={[contentContainerRow,{gap:5}]}>
-     <MaterialIcons name="compare-arrows" size={24} color="black" />
-     <View style={contentContainerCol}>
-  <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
-     <Text style={subtitle}>14:20 12 Apr</Text>
-      </View>
-      </View>
-      
-     <View style={[contentContainerRow,{gap:5}]}>
-     <Text style={title2}>2.0034 eth</Text>
-     <Entypo name="chevron-with-circle-right" size={24} color="black" />
-     </View>
-     </View>
-     
-   </View>
    
-    <View style={[shadowedContainer,tw`flex-col items-start `]}>
      
-     <Text style={title2}>Transaction history </Text>
+ 
+ {slicedNews.map((news,index)=>{
+ 
+     return (
+       
+   <View 
+   key={index}
+   style={[shadowedContainer,tw`flex-col items-start`]}>
       
-     <View style={[contentContainerRow,tw`w-full justify-between`]}>
-      <View style={[contentContainerRow,{gap:5}]}>
-     <MaterialIcons name="compare-arrows" size={24} color="black" />
-     <View style={contentContainerCol}>
-   <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
-     <Text style={subtitle}>14:20 12 Apr</Text>
-      </View>
-      </View>
       
-     <View style={[contentContainerRow,{gap:5}]}>
-     <Text style={title2}>2.0034 eth</Text>
-     <Entypo name="chevron-with-circle-right" size={24} color="black" />
-     </View>
-     </View>
+      
+      
+         <Text style={tw`italic text-lg font-medium`}> {news.title}</Text>
+         <Text style={tw`italic text-stone-600 text-sm font-medium`}> source = {news.source}</Text>
+  
+      
+       
+       
+       </View>
+       )
+   })}
+      
      
-   </View>
-   
-   <View style={[shadowedContainer,tw`flex-col items-start `]}>
-     
-     <Text style={title2}>Transaction history </Text>
-      
-     <View style={[contentContainerRow,tw`w-full justify-between`]}>
-      <View style={[contentContainerRow,{gap:5}]}>
-     <MaterialIcons name="compare-arrows" size={24} color="black" />
-     <View style={contentContainerCol}>
-     <Text style={[title2,tw`text-sm font-medium`]}>Sold Etherium </Text>
-     <Text style={subtitle}>14:20 12 Apr</Text>
-      </View>
-      </View>
-      
-     <View style={[contentContainerRow,{gap:5}]}>
-     <Text style={title2}>2.0034 eth</Text>
-     <Entypo name="chevron-with-circle-right" size={24} color="black" />
-     </View>
-     </View>
-     
-   </View>
+ 
    
 </ScrollView>
 </View> 

@@ -84,35 +84,29 @@ export const  CoinDetails =(props)=>{
 
 const [toggleTheModal,setToggleTheModal] = useState(false)
 
-const [newsData,setNewsData] = useState()
+const [recentTrades,setRecentTrades] = useState([])
 
+useLayoutEffect(()=>{
+  
 
-
-const axios = require("axios");
 
 const options = {
   method: 'GET',
-  url: 'https://crypto-news-live3.p.rapidapi.com/news',
+  url: 'https://binance43.p.rapidapi.com/trades',
+  params: {symbol: 'BTCUSDT', limit: '20'},
   headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'crypto-news-live3.p.rapidapi.com'
+    'X-RapidAPI-Key': '07fa0fe881msh70683e595bdab4ap1359fejsne2f111d1de7c',
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
   }
 };
 
-useEffect(()=>{
-  
 axios.request(options).then(function (response) {
-	console.log(response.data);
+	setRecentTrades(response.data);
 }).catch(function (error) {
 	console.error(error);
 });
-
   
 },[])
-  
- 
-
-
 
 const renderModal =()=> 
 setToggleTheModal(open => !open)
@@ -215,12 +209,26 @@ style={tw`w-[30px] h-[30px] rounded-full `}
       visible={toggleTheModal}>
       
       <Exchangers 
+      name={name}
+      id={id}
       setToggleTheModal={setToggleTheModal}/>
       </Modal>
     
     </View>
     <View>
-       <ScrollView>
+       <ScrollView style={tw`h-auto`}>
+       {recentTrades.map((item)=>{
+       
+        return (
+          
+          <View key={item.id}>
+          <Text>{item.price}</Text>
+          <Text>{item.qty}</Text>
+          
+          </View>
+          )
+         
+       })}
        </ScrollView>
     </View>
     </View>
