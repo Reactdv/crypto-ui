@@ -373,7 +373,7 @@ axios.request(options).then(function (response) {
 
 
 
-const container = tw`flex flex-auto`
+const container = tw`flex-1`
 
 const linearBg = tw`h-40 w-full rounded-b-[30px] items-center justify-center` 
 

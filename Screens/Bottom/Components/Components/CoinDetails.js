@@ -7,7 +7,7 @@ import { ScrollView,Modal,Image,TouchableOpacity,StyleSheet, Text, View } from '
 
 import tw from "twrnc"
 
-import { Entypo,Ionicons,FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons,Entypo,Ionicons,FontAwesome } from '@expo/vector-icons';
 import { Line } from "react-chartjs-2"
 import {Chart as ChartJS} from "chart.js/auto"
 
@@ -216,15 +216,43 @@ style={tw`w-[30px] h-[30px] rounded-full `}
     
     </View>
     <View>
-       <ScrollView style={tw`h-auto`}>
+       <ScrollView 
+        showsHorizontalScrollIndicator={false}
+       style={tw`shadow-lg mt-2.5 h-[200px]`}>
        {recentTrades.map((item)=>{
+       let date = item.time
+       date = new Date(date * 1000)
+       let hrs = date.getUTCHours().toString().padStart(2,0)
+       let mins = date.getUTCMinutes().toString().padStart(2,0)
+       let secs = date.getUTCSeconds().toString().padStart(2,0)
+       
+       const convertedTime = 
+       `${hrs}:${mins}:${secs}`
        
         return (
           
-          <View key={item.id}>
-          <Text>{item.price}</Text>
-          <Text>{item.qty}</Text>
-          
+          <View 
+          style={tw`p-[3px] mb-2.5 shadow-lg`}
+          key={item.id}>
+             <Text style={tw`text-lg`}> Transactions</Text>
+            <View style={tw`flex-row items-center justify-between`}>
+            
+            <View style={tw`flex-row items-center justify-center`}>
+                <MaterialIcons name="compare-arrows" size={24} color="black" />
+                <View>
+               <Text>Amount {item.quoteQty}</Text>
+               <Text>quote {item.qty}</Text>
+               <Text style={tw`text-xs text-stone-500`}>Time {convertedTime}</Text>
+               </View>
+            </View>
+            <View>
+              <Text style={[tw`text-xs`,{color:direction}]}>Price {item.price}</Text>
+            
+            </View>
+            
+            
+            </View>
+       
           </View>
           )
          
