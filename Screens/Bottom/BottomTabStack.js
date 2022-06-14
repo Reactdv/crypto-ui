@@ -1,6 +1,6 @@
 
 
-
+import * as DocumentPicker from 'expo-document-picker'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -109,9 +109,8 @@ export  const  BottomTabStack =({primary})=>{
        tabBarIcon:({color})=>{
        return (
          <View style={labelContainer}>
-           <Ionicons name="settings" 
-           color={color}
-           size={25} />
+         <Ionicons name="ios-settings" size={24} color="black" />
+           
            <Text>Settings</Text>
          </View>
          )

@@ -135,7 +135,7 @@ const mappedCoins = coins.map((item)=>{
     <Text style={tw`left-10 top-72 absolute text-lg font-medium`}>My holdings</Text>
    <ScrollView 
     showsVerticalScrollIndicator={false}
-   style={tw`mx-5 p-2.5 h-[220px] mt-[50px] bg-white`}>
+   style={tw`shadow-lg mx-5 p-2.5 h-[220px] mt-[50px] bg-white`}>
        
        {mappedCoins}
    </ScrollView>
