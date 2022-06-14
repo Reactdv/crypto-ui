@@ -13,7 +13,8 @@ import axios from "axios"
 
 
 
-export const CoinPicker =({setIsModalVisible,setData2,setData,setIsModalVisible2})=>{
+export const CoinPicker =
+({setIsModalVisible,setIsModalVisible2,setData,setData2,isBuying})=>{
   
   const [coins,setCoins] = useState([])
   
@@ -31,19 +32,23 @@ const getCoins =()=>{
   
   const onPressItem =(name,image,symbol)=>{
     
-    setIsModalVisible(false)
-    setData(name,image,symbol)
+    setIsModalVisible(show=>!show)
+   
+   setData(name,image,symbol)
    
     
   }
   
   const onPressItem2 =(name,image,symbol)=>{
     
-    setIsModalVisible2(false)
-  
-    setData2(name,image,symbol)
+   setIsModalVisible2(show=>!show)
+   
+  setData2(name,image,symbol)
+   
+   
     
   }
+  
   
   const mappedCoins = coins.map((coin)=>{
     const {id,symbol,name,current_price,image} = coin
@@ -54,8 +59,10 @@ const getCoins =()=>{
       <TouchableOpacity
        onPress={()=> {
          return (
-       onPressItem(name,image,symbol)||
-       onPressItem2(name,image,symbol)
+           isBuying?
+       onPressItem2(name,image,symbol):
+       onPressItem(name,image,symbol)
+       
        
         
          )
@@ -76,8 +83,8 @@ const getCoins =()=>{
 <TouchableOpacity
 onPress={()=>{
   return (
-  setIsModalVisible(show=> !show) ||
-  setIsModalVisible2(show=> !show)
+  isBuying?setIsModalVisible2(show=> !show):setIsModalVisible(show=>!show) 
+ 
   )
 }}
 style={tw` mt-[165px] mx-2.5  h-[200px] bg-white`}> 

@@ -125,72 +125,8 @@ axios.get(fetchTrendingCoins)
     getTrendingCoins()
   },[trendingCoins])
   
-useEffect(()=>{
-  
-const axios = require("axios");
-
-const options = {
-  method: 'GET',
-  url: 'https://binance43.p.rapidapi.com/trades',
-  params: {symbol: 'ETHBTC', limit: '20'},
-  headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
-  }
-};
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-  
-  
-},[isNotify])
-
-  useEffect(()=>{
-    
 
 
-const options = {
-  method: 'GET',
-  url: 'https://binance43.p.rapidapi.com/klines',
-  params: {symbol: 'BTCUSDT', interval: '5m', limit: '100'},
-  headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
-  }
-};
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-    
-    
-  },[])
-  
- useEffect(()=>{
-   
-const axios = require("axios");
-
-const options = {
-  method: 'GET',
-  url: 'https://binance43.p.rapidapi.com/ticker/bookTicker',
-  headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
-  }
-};
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-   
- },[])
  
  useLayoutEffect(()=>{
 
@@ -205,30 +141,8 @@ const options = {
 };
 
 axios.request(options).then(function (response) {
- setNews(response.data),
+ setNews(response.data)
  
- console.log(news)
-}).catch(function (error) {
-	console.error(error);
-});
-   
- },[isNotify])
- 
- useEffect(()=>{
-   
-const axios = require("axios");
-
-const options = {
-  method: 'GET',
-  url: 'https://binance43.p.rapidapi.com/ticker/price',
-  headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
-  }
-};
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
 }).catch(function (error) {
 	console.error(error);
 });
@@ -290,6 +204,7 @@ axios.request(options).then(function (response) {
    
    <View>
    <ScrollView
+   alwaysBounceHorizontal
    horizontal={true}
    showsHorizontalScrollIndicator={false}
    style={tw`h-auto w-full px-5 pb-2.5`}>

@@ -22,6 +22,10 @@ import {CoinPicker} from "./Components/CoinPicker.js"
 const [isModalVisible,setIsModalVisible] = useState(false)
 const [isModalVisible2,setIsModalVisible2] = useState(false)
 
+const [isBuying,setIsBuying] = useState(false)
+const [conversion,setConversion] = useState()
+
+
   const [coins,setCoins] = useState([])
   const [selectedCoin,setSelectedCoin] = useState("Select coin")
   const [selectedCoinImage,setSelectedCoinImage] = useState("")
@@ -31,33 +35,52 @@ const [isModalVisible2,setIsModalVisible2] = useState(false)
   const [selectedCoinImage2,setSelectedCoinImage2] = useState("")
   const [selectedCoinSymbol2,setSelectedCoinSymbol2] = useState("")
   
+useEffect(()=>{
   
-  const changeModalVisibility =()=>
-  setIsModalVisible(show=> !show)
+const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://alpha-vantage.p.rapidapi.com/query',
+  params: {from_currency: 'BTC', function: 'CURRENCY_EXCHANGE_RATE', to_currency: 'USD'},
+  headers: {
+    'X-RapidAPI-Key': '07fa0fe881msh70683e595bdab4ap1359fejsne2f111d1de7c',
+    'X-RapidAPI-Host': 'alpha-vantage.p.rapidapi.com'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
   
-  const changeModalVisibility2 =()=>
-  setIsModalVisible2(show=> !show)
+})
+  
+  
   
  const setData =(name,image,symbol)=>{
-   setSelectedCoin(name)
-   setSelectedCoinImage(image)
+  
+   setSelectedCoin(name),
+   setSelectedCoinImage(image),
    setSelectedCoinSymbol(symbol)
-   
-
+  
+ 
  }
  
  const setData2 =(name,image,symbol)=>{
-   
-   setSelectedCoin2(name)
-   setSelectedCoinImage2(image)
+  
+   setSelectedCoin2(name),
+   setSelectedCoinImage2(image),
    setSelectedCoinSymbol2(symbol)
-
+  
+ 
  }
  
  
   return (
 
-<View style={tw`flex-auto m-2.5 shadow-lg`}> 
+<View style={tw`mb-[20px] flex-auto m-2.5 shadow-lg`}> 
   <View style={headerContainer}>
      <Text style={tw`text-xl font-medium`}>Exchange</Text>
       <View style={headerIcons}>
@@ -106,7 +129,12 @@ const [isModalVisible2,setIsModalVisible2] = useState(false)
       </View>
       
       <TouchableOpacity
-         onPress={()=>setIsModalVisible2(show=> !show)}
+         onPress={()=>{
+           
+         setIsModalVisible2(show=> !show)
+          setIsBuying(buying =>!buying)
+           
+         }}
          
        
          style={tw`items-center flex-row justify-between p-2.5`}
@@ -124,23 +152,28 @@ const [isModalVisible2,setIsModalVisible2] = useState(false)
       </TouchableOpacity>
       <View>
          <TextInput 
+       
+         
          keyboardType="numeric"
-          style={[tw`shadow-lg  rounded-lg mx-2.5 text-xl py-2.5 px-2.5 my-2.5 `,{outline:"none"}]}
+          style={[tw`shadow-lg rounded-lg mx-2.5 text-xl py-2.5 px-2.5 my-2.5 `,{outline:"none"}]}
          placeholder={selectedCoinSymbol2.toUpperCase()}
          />
       </View>
+      <TouchableOpacity style={tw`my-5 py-[15px] mx-2.5 bg-blue-700 items-center justify-center rounded-lg`}>
+         <Text style={tw`text-white text-lg`}>Exchange</Text>
+      </TouchableOpacity>
       
          <Modal 
-         nRequestClose=
-         {()=>setIsModalVisible(show=> !show)}
+         
          animationType="fade"
          transparent={true}
-          visible={isModalVisible||isModalVisible2}>
+          visible={isBuying?isModalVisible2:isModalVisible}>
            
            <CoinPicker 
            
-           setData2={setData}
+           isBuying={isBuying}
            setData={setData}
+           setData2={setData2}
            setIsModalVisible={setIsModalVisible}
            setIsModalVisible2={setIsModalVisible2}
            />
