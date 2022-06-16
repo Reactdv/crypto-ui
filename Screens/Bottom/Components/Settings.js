@@ -8,6 +8,11 @@ import React, { useState } from 'react';
 import { Ionicons,MaterialIcons,MaterialCommunityIcons,FontAwesome,Fontisto,AntDesign } from '@expo/vector-icons';
 
 import tw from "twrnc"
+import {STYLES} from "../../../globalStyles/Styles.js"
+
+const {SUBTITLE,TITLE,primaryBg,lightness}=
+STYLES
+
 
 const Data = [
   
@@ -25,6 +30,7 @@ const Data = [
     title: "Leverage adjustment",
     subtitle: "choose the one that suits you best" ,
     icon :<MaterialCommunityIcons name="weight-lifter" size={24} color="white" />
+    
   },
   
   { 
@@ -41,12 +47,16 @@ const Data = [
     title: "Invite friends",
     subtitle: "get a $5 coupon for every invite",
     icon :<Ionicons name="md-people" size={24} color="white" />
+   
   },
   
   
   ]
 
 export const Settings =()=>{
+  
+  
+
   return (
 
 <View> 
@@ -84,7 +94,7 @@ export const Settings =()=>{
   </View>
   
   {Data.map((item)=>{
-    const {color,id,title,subtitle,icon} = item
+    const {subtitleStyle,color,id,title,subtitle,icon} = item
   
     return(
       
@@ -97,7 +107,8 @@ export const Settings =()=>{
      </View>
      <View style={tw`ml-2.5 flex-col items-start justify-center`}>
      <Text style={tw`text-md `}>{title} </Text>
-     <Text style={tw`text-sm text-stone-500 `}>{subtitle} </Text>
+     <Text 
+     style={SUBTITLE}>{subtitle} </Text>
      </View>
   
   </View>

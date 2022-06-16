@@ -10,7 +10,9 @@ import axios from "axios"
 
 import tw from "twrnc"
 import Binance from 'binance-api-node'
-
+ 
+ import { orderbook } from "../../../../api/Api.js"
+ 
 const orderIds = [
   
   {id:"BTCUSDT"},
@@ -49,18 +51,9 @@ useLayoutEffect(()=>{
 },[bid])
   
 const getOrderBook =()=>{
-  
-const options = {
-  method: 'GET',
-  url: 'https://binance43.p.rapidapi.com/depth',
-  params: {symbol: "BTCUSDT", limit: '20'},
-  headers: {
-    'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
-  }
-};
+ 
 
-axios.request(options)
+axios.request(orderbook)
 .then((response)=>{
   setAsk(response.data.asks),
   setBid(response.data.bids)

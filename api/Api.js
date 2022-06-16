@@ -11,24 +11,12 @@ export const ohlc =  "https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_cur
 export const historicalData = "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=php&from=1654203443&to=1654808243"
 
 
-/*
-
-const options = {
+ export const orderbook = {
   method: 'GET',
-  url: 'https://crypto-news-live3.p.rapidapi.com/news',
+  url: 'https://binance43.p.rapidapi.com/depth',
+  params: {symbol: "BTCUSDT", limit: '20'},
   headers: {
     'X-RapidAPI-Key': 'fc1d0a119cmsh14dada74bd533f8p1ecab7jsn9e2a93c7dc5c',
-    'X-RapidAPI-Host': 'crypto-news-live3.p.rapidapi.com'
+    'X-RapidAPI-Host': 'binance43.p.rapidapi.com'
   }
 };
-
-useEffect(()=>{
-  
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-
-  
-},[])   */

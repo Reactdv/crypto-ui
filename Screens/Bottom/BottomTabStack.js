@@ -19,11 +19,11 @@ import {Trade} from "./Components/Trade.js"
 import {Prices} from "./Components/Prices.js"
 import {Settings} from "./Components/Settings.js"
 
-import { primary} from "../../globalStyles/colors.js"
 
 
 
-export  const  BottomTabStack =({primary})=>{
+
+export  const  BottomTabStack =()=>{
   return (
     
  <Tab.Navigator
@@ -109,7 +109,7 @@ export  const  BottomTabStack =({primary})=>{
        tabBarIcon:({color})=>{
        return (
          <View style={labelContainer}>
-         <Ionicons name="ios-settings" size={24} color="black" />
+         <Ionicons name="ios-settings" size={24} color={color} />
            
            <Text>Settings</Text>
          </View>

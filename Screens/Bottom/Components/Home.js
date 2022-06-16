@@ -1,7 +1,7 @@
 
 
 
-import { StatusBar } from 'expo-status-bar';
+
 import { Modal,TouchableOpacity,Image,ScrollView,StyleSheet, Text, View } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
